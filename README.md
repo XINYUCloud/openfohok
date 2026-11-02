@@ -27,6 +27,8 @@
 │   ├── env.php            # .env / 环境变量读取
 │   ├── config.php         # 站点配置（不含密钥）
 │   └── wenchan.example.php
+├── database/              # 数据库结构（不含数据）
+│   └── schema.sql
 ├── includes/              # 公共库：数据库、鉴权、OAuth、邮件、安全
 ├── oauth/                 # 旧版自建 OAuth 服务（已下线）
 ├── open-app/              # 移动端 App 后端
@@ -65,7 +67,13 @@ GRANT ALL PRIVILEGES ON `open-user`.* TO 'open-user'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-`open-app/schema.sql` 包含 App 端附加表；其余业务表需从现有实例迁移。首次访问时，部分表会自动创建（限流、OAuth 流程、App 令牌等）。
+导入主库结构（仅表结构，不含任何数据）：
+
+```bash
+mysql -u open-user -p open-user < database/schema.sql
+```
+
+`open-app/schema.sql` 包含 App 端附加表。
 
 ### 4. 启动
 
